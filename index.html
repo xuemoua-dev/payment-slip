@@ -97,6 +97,24 @@
             transform: scale(0.95);
             transition: opacity 0.2s, transform 0.2s;
         }
+
+        /* Card Shadows - Enhanced for better visibility */
+        .card-shadow {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-shadow-hover {
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .card-shadow-hover:hover {
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15), 0 6px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .card-shadow-lg {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 
@@ -175,7 +193,7 @@
 
             <!-- Digital Slip Card -->
             <div id="slip-card"
-                class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200 relative transition-all duration-300">
+                class="bg-white rounded-2xl card-shadow-lg overflow-hidden border border-gray-200 relative transition-all duration-300">
 
                 <!-- Scan Overlay -->
                 <div id="scan-overlay"
@@ -255,7 +273,7 @@
             </div>
 
             <!-- Add Form -->
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+            <div class="bg-white p-6 rounded-xl card-shadow border border-gray-200">
                 <h3 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -317,7 +335,7 @@
         <div class="md:col-span-2 space-y-6">
 
             <!-- Filters -->
-            <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+            <div class="bg-white p-4 rounded-xl card-shadow border border-gray-100">
                 <div class="flex justify-between items-center mb-3">
                     <h3 class="font-bold text-gray-800 text-sm flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -376,7 +394,8 @@
 
             <!-- Stats Cards -->
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <div class="bg-gradient-to-br from-red-500 to-red-600 rounded-xl p-5 text-white shadow-lg">
+                <div
+                    class="bg-gradient-to-br from-red-500 to-red-600 rounded-xl p-5 text-white card-shadow-lg card-shadow-hover">
                     <div class="flex justify-between items-start">
                         <div>
                             <p class="text-red-100 text-sm" data-i18n="statTotal">ຍອດລວມທັງໝົດ</p>
@@ -393,7 +412,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+                <div class="bg-white rounded-xl p-5 card-shadow card-shadow-hover border border-gray-100">
                     <div class="flex justify-between items-start">
                         <div>
                             <p class="text-gray-500 text-sm" data-i18n="statCount">ຈຳນວນລາຍການ</p>
@@ -436,7 +455,7 @@
             </div>
 
             <!-- Charts -->
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+            <div class="bg-white p-6 rounded-xl card-shadow border border-gray-100">
                 <h3 class="font-bold text-gray-800 mb-6 flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -451,7 +470,7 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <div class="bg-white p-6 rounded-xl card-shadow border border-gray-100">
                     <h3 class="font-bold text-gray-800 mb-4 text-sm" data-i18n="chartPie">ສັດສ່ວນຕາມໝວດໝູ່</h3>
                     <div class="w-full h-48 flex justify-center">
                         <canvas id="pieChart"></canvas>
@@ -516,6 +535,24 @@
         let GOOGLE_SCRIPT_URL = HARDCODED_URL;
 
         const formatCurrency = (val) => new Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }).format(val);
+
+        // Format date from YYYY-MM-DD or ISO timestamp to DD/MM/YYYY
+        const formatDate = (dateStr) => {
+            if (!dateStr) return '-';
+
+            // Extract date portion if it's an ISO timestamp (e.g., "2025-10-09T17:00:00.000Z")
+            let datePart = dateStr;
+            if (dateStr.includes('T')) {
+                datePart = dateStr.split('T')[0];
+            }
+
+            // Convert YYYY-MM-DD to DD/MM/YYYY
+            const parts = datePart.split('-');
+            if (parts.length === 3) {
+                return `${parts[2]}/${parts[1]}/${parts[0]}`; // DD/MM/YYYY
+            }
+            return dateStr;
+        };
 
         // --- Custom Dialog System ---
         function showDialog(title, message, type = 'info') {
@@ -829,7 +866,7 @@
             // Common Fields
             document.getElementById('slip-amount').textContent = formatCurrency(data.amount);
             document.getElementById('slip-bill').textContent = data.billNumber;
-            document.getElementById('slip-datetime').textContent = data.date + ' ' + (data.time || '');
+            document.getElementById('slip-datetime').textContent = formatDate(data.date) + ' ' + (data.time || '');
             document.getElementById('slip-top-value').textContent = data.senderAccount;
 
             const header = document.getElementById('slip-header');
@@ -999,7 +1036,7 @@
                             <p class="text-sm font-medium text-gray-800 truncate">${t.description}</p>
                             <div class="flex gap-2 items-center">
                                 <span class="text-xs px-1.5 py-0.5 bg-gray-100 rounded text-gray-500">${t.category}</span>
-                                <p class="text-xs text-gray-400 truncate">${t.date}</p>
+                                <p class="text-xs text-gray-400 truncate">${formatDate(t.date)}</p>
                             </div>
                         </div>
                     </div>
@@ -1025,7 +1062,7 @@
             barChartInstance = new Chart(ctxBar, {
                 type: 'bar',
                 data: {
-                    labels: dates.length ? dates : ['ບໍ່ມີຂໍ້ມູນ'],
+                    labels: dates.length ? dates.map(d => formatDate(d)) : ['ບໍ່ມີຂໍ້ມູນ'],
                     datasets: [{
                         label: 'ຍອດໃຊ້ຈ່າຍ (LAK)',
                         data: amountsByDate.length ? amountsByDate : [0],
