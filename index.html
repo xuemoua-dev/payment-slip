@@ -294,7 +294,8 @@
                     <input type="hidden" id="formAccount">
 
                     <div>
-                        <label class="block text-xs text-gray-500 mb-1" data-i18n="labelDetail">ລາຍລະອຽດ /
+                        <label for="inputDesc" class="block text-xs text-gray-500 mb-1" data-i18n="labelDetail">ລາຍລະອຽດ
+                            /
                             ລາຍການ</label>
                         <input type="text" id="inputDesc"
                             class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-red-200 outline-none transition"
@@ -303,7 +304,8 @@
 
                     <div class="grid grid-cols-2 gap-2">
                         <div>
-                            <label class="block text-xs text-gray-500 mb-1" data-i18n="labelCategory">ໝວດໝູ່</label>
+                            <label for="inputCategory" class="block text-xs text-gray-500 mb-1"
+                                data-i18n="labelCategory">ໝວດໝູ່</label>
                             <select id="inputCategory"
                                 class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-red-200 outline-none transition bg-white">
                                 <option value="ອາຫານ">ອາຫານ</option>
@@ -315,7 +317,8 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-xs text-gray-500 mb-1" data-i18n="labelInputAmount">ຈຳນວນເງິນ
+                            <label for="inputAmount" class="block text-xs text-gray-500 mb-1"
+                                data-i18n="labelInputAmount">ຈຳນວນເງິນ
                                 (LAK)</label>
                             <input type="number" id="inputAmount" step="0.01"
                                 class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-red-200 outline-none transition font-mono"
@@ -350,20 +353,22 @@
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
                     <!-- Date Start -->
                     <div>
-                        <label class="block text-xs text-gray-500 mb-1"
+                        <label for="filterStartDate" class="block text-xs text-gray-500 mb-1"
                             data-i18n="labelStartDate">ວັນທີເລີ່ມຕົ້ນ</label>
                         <input type="date" id="filterStartDate"
                             class="w-full p-2 border rounded-lg text-sm bg-gray-50 focus:bg-white transition outline-none focus:ring-2 focus:ring-red-100">
                     </div>
                     <!-- Date End -->
                     <div>
-                        <label class="block text-xs text-gray-500 mb-1" data-i18n="labelEndDate">ວັນທີສິ້ນສຸດ</label>
+                        <label for="filterEndDate" class="block text-xs text-gray-500 mb-1"
+                            data-i18n="labelEndDate">ວັນທີສິ້ນສຸດ</label>
                         <input type="date" id="filterEndDate"
                             class="w-full p-2 border rounded-lg text-sm bg-gray-50 focus:bg-white transition outline-none focus:ring-2 focus:ring-red-100">
                     </div>
                     <!-- Category -->
                     <div>
-                        <label class="block text-xs text-gray-500 mb-1" data-i18n="labelCategory">ໝວດໝູ່</label>
+                        <label for="filterCategory" class="block text-xs text-gray-500 mb-1"
+                            data-i18n="labelCategory">ໝວດໝູ່</label>
                         <select id="filterCategory"
                             class="w-full p-2 border rounded-lg text-sm bg-gray-50 focus:bg-white transition outline-none focus:ring-2 focus:ring-red-100">
                             <option value="all">ທຸກໝວດໝູ່</option>
@@ -377,7 +382,8 @@
                     </div>
                     <!-- Search -->
                     <div>
-                        <label class="block text-xs text-gray-500 mb-1" data-i18n="labelSearch">ຄົ້ນຫາ</label>
+                        <label for="filterSearch" class="block text-xs text-gray-500 mb-1"
+                            data-i18n="labelSearch">ຄົ້ນຫາ</label>
                         <div class="relative">
                             <input type="text" id="filterSearch" placeholder="ຊື່, ລາຍລະອຽດ..."
                                 class="w-full p-2 pl-8 border rounded-lg text-sm bg-gray-50 focus:bg-white transition outline-none focus:ring-2 focus:ring-red-100">
@@ -440,7 +446,7 @@
                         <div>
                             <p class="text-gray-500 text-sm" data-i18n="statTop">ໝວດໝູ່ສູງສຸດ</p>
                             <h2 class="text-xl font-bold text-gray-800 mt-1" id="topCategory">-</h2>
-                            <p class="text-xs text-gray-400 mt-2" id="topCategoryAmount">0.00 LAK</p>
+                            <p class="text-md text-purple-400 mt-2" id="topCategoryAmount">0.00 LAK</p>
                         </div>
                         <div class="p-2 bg-purple-50 text-purple-500 rounded-lg">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
@@ -462,7 +468,7 @@
                         class="text-red-500">
                         <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
                     </svg>
-                    <span data-i18n="chartTrend"></span>ທ່າອ່ຽງການໃຊ້ຈ່າຍ (ປະຈຳວັນ)</span>
+                    <span data-i18n="chartTrend">
                 </h3>
                 <div class="w-full h-64">
                     <canvas id="barChart"></canvas>
@@ -566,7 +572,7 @@
 
             // Set Content
             modalTitle.textContent = title;
-            modalMessage.innerHTML = message.replace(/\n/g, '<br>'); // Support newlines
+            modalMessage.innerHTML = message.replaceAll('\n', '<br>'); // Support newlines
 
             // Styles based on type
             modalIcon.innerHTML = '';
@@ -614,7 +620,7 @@
 
                 // Get form values
                 const desc = document.getElementById('inputDesc').value;
-                const amount = parseFloat(document.getElementById('inputAmount').value);
+                const amount = Number.parseFloat(document.getElementById('inputAmount').value);
                 const category = document.getElementById('inputCategory').value;
 
                 // Get hidden extracted values or defaults
@@ -765,101 +771,108 @@
         }
 
         function parseSlipData(text) {
-            // Normalize text
             const lines = text.split('\n');
-            const fullText = text.replace(/\s+/g, ' ');
+            const fullText = text.replaceAll(/\s+/g, ' ');
+
+            const type = detectSlipType(fullText);
 
             let data = {
-                type: 'TRANSFER', // or ONEPAY
-                amount: 0,
-                billNumber: '-',
-                date: new Date().toISOString().split('T')[0],
-                time: '',
+                type: type,
+                amount: extractAmount(fullText),
+                billNumber: extractBillNumber(fullText),
+                ...extractDateTime(fullText),
+                senderAccount: extractSenderAccount(fullText),
                 description: '',
                 recipientName: '-',
-                senderAccount: '-',
                 recipientAccount: '-'
             };
 
-            // 1. Detect Type (OnePay vs Transfer)
-            if (fullText.includes("OnePay") || fullText.includes("Merchant") || fullText.includes("Reference")) {
-                data.type = 'ONEPAY';
-            }
-
-            // 2. Extract Amount (Look for LAK)
-            // Regex matches: 250,000.00 LAK, 54.000,00 LAK
-            const amountMatch = fullText.match(/([\d,]+(\.\d{2})?)\s*LAK/i);
-            if (amountMatch) {
-                data.amount = parseFloat(amountMatch[1].replace(/,/g, ''));
-            }
-
-            // 3. Extract Bill Number (Starts with 202... usually 13-15 digits)
-            const billMatch = fullText.match(/\b(202\d{10,})\b/);
-            if (billMatch) {
-                data.billNumber = billMatch[1];
+            if (type === 'ONEPAY') {
+                Object.assign(data, extractOnePayDetails(text, lines));
             } else {
-                // Fallback: Look for "Bill number" label
-                const labelMatch = fullText.match(/Bill number\s*(\d+)/i);
-                if (labelMatch) data.billNumber = labelMatch[1];
+                Object.assign(data, extractTransferDetails(lines));
             }
 
-            // 4. Extract Date/Time
-            // Common formats: 09/02/2026, 2026-02-09
+            // Fallback for description
+            if (!data.description) {
+                data.description = type === 'ONEPAY' ? 'ຊຳລະຄ່າສິນຄ້າ/ບໍລິການ' : 'ໂອນເງິນ';
+            }
+
+            return data;
+        }
+
+        function detectSlipType(fullText) {
+            if (fullText.includes("OnePay") || fullText.includes("Merchant") || fullText.includes("Reference")) {
+                return 'ONEPAY';
+            }
+            return 'TRANSFER';
+        }
+
+        function extractAmount(fullText) {
+            const amountMatch = fullText.match(/([\d,]+(\.\d{2})?)\s*LAK/i);
+            return amountMatch ? Number.parseFloat(amountMatch[1].replaceAll(',', '')) : 0;
+        }
+
+        function extractBillNumber(fullText) {
+            const billMatch = fullText.match(/\b(202\d{10,})\b/);
+            if (billMatch) return billMatch[1];
+
+            const labelMatch = fullText.match(/Bill number\s*(\d+)/i);
+            return labelMatch ? labelMatch[1] : '-';
+        }
+
+        function extractDateTime(fullText) {
+            const result = {
+                date: new Date().toISOString().split('T')[0],
+                time: ''
+            };
+
             const dateMatch = fullText.match(/(\d{2}\/\d{2}\/\d{4})/);
             const timeMatch = fullText.match(/(\d{2}:\d{2}(:\d{2})?)/);
 
             if (dateMatch) {
-                // Convert DD/MM/YYYY to YYYY-MM-DD
                 const parts = dateMatch[1].split('/');
-                data.date = `${parts[2]}-${parts[1]}-${parts[0]}`;
+                result.date = `${parts[2]}-${parts[1]}-${parts[0]}`;
             }
-            if (timeMatch) {
-                data.time = timeMatch[1];
+            if (timeMatch) result.time = timeMatch[1];
+
+            return result;
+        }
+
+        function extractSenderAccount(fullText) {
+            const accMatch = fullText.match(/Account\s+([0-9x-]+)/i);
+            return accMatch ? accMatch[1] : '-';
+        }
+
+        function extractOnePayDetails(text, lines) {
+            const details = { description: '', recipientName: 'OnePay Merchant' };
+
+            const refMatch = text.match(/Reference\s*\n?([A-Z0-9]+)/i);
+            if (refMatch) details.description = "Ref: " + refMatch[1];
+
+            const merchIndex = lines.findIndex(l => l.toLowerCase().includes('merchant'));
+            if (merchIndex !== -1 && lines[merchIndex + 1]) {
+                details.recipientName = lines[merchIndex + 1].trim();
             }
+            return details;
+        }
 
-            // 5. Extract Sender Account (Pattern: xxx-12-00-xxxxx)
-            // Sometimes OCR reads 'x' as 'x' or digits. 
-            // We look for the gray header line usually. 
-            const accMatch = fullText.match(/Account\s+([0-9xX-]+)/i);
-            if (accMatch) data.senderAccount = accMatch[1];
+        function extractTransferDetails(lines) {
+            const details = { description: '', recipientName: '-', recipientAccount: '-' };
 
-            // 6. Type Specific Logic
-            if (data.type === 'ONEPAY') {
-                // Try to find Reference
-                const refMatch = text.match(/Reference\s*\n?([A-Z0-9]+)/i);
-                if (refMatch) data.description = "Ref: " + refMatch[1];
-
-                // Merchant Name is hard via simple OCR, assume it's after "Merchant"
-                // Heuristic: Find line with Merchant, take next line
-                const merchIndex = lines.findIndex(l => l.toLowerCase().includes('merchant'));
-                if (merchIndex !== -1 && lines[merchIndex + 1]) {
-                    data.recipientName = lines[merchIndex + 1].trim();
-                } else {
-                    data.recipientName = "OnePay Merchant";
-                }
-            } else {
-                // TRANSFER
-                // Try to find Description
-                const descIndex = lines.findIndex(l => l.toLowerCase().includes('description'));
-                if (descIndex !== -1 && lines[descIndex + 1]) {
-                    data.description = lines[descIndex + 1].trim();
-                }
-
-                // Try to find Recipient Name (After "To account")
-                const toIndex = lines.findIndex(l => l.toLowerCase().includes('to account'));
-                if (toIndex !== -1 && lines[toIndex + 1]) {
-                    data.recipientName = lines[toIndex + 1].trim();
-                    // Check if next line is account number
-                    if (lines[toIndex + 2] && lines[toIndex + 2].match(/[\d-x]+/)) {
-                        data.recipientAccount = lines[toIndex + 2].trim();
-                    }
-                }
+            const descIndex = lines.findIndex(l => l.toLowerCase().includes('description'));
+            if (descIndex !== -1 && lines[descIndex + 1]) {
+                details.description = lines[descIndex + 1].trim();
             }
 
-            // Fallback for nulls
-            if (!data.description) data.description = data.type === 'ONEPAY' ? 'ຊຳລະຄ່າສິນຄ້າ/ບໍລິການ' : 'ໂອນເງິນ';
-
-            return data;
+            const toIndex = lines.findIndex(l => l.toLowerCase().includes('to account'));
+            if (toIndex !== -1 && lines[toIndex + 1]) {
+                details.recipientName = lines[toIndex + 1].trim();
+                if (lines[toIndex + 2] && lines[toIndex + 2].match(/[\d-x]+/)) {
+                    details.recipientAccount = lines[toIndex + 2].trim();
+                }
+            }
+            return details;
         }
 
         function updateSlipUI(data) {
@@ -966,7 +979,7 @@
             allTransactions.forEach(t => {
                 const row = [
                     t.id || '-', t.bill_number || '-', t.date || '-', t.time || '-',
-                    `"${(t.description || '-').replace(/"/g, '""')}"`,
+                    `"${(t.description || '-').replaceAll('"', '""')}"`,
                     t.category || '-', t.amount || 0, t.currency || 'LAK',
                     t.sender_account || '-', t.recipient || '-', t.account || '-'
                 ];
@@ -979,7 +992,7 @@
             link.setAttribute("download", "finance_backup.csv");
             document.body.appendChild(link);
             link.click();
-            document.body.removeChild(link);
+            link.remove();
         }
 
         // --- Stats & Rendering ---
@@ -1145,8 +1158,8 @@
             'btnConfirm': { lo: 'ຢືນຢັນຂໍ້ມູນ', en: 'Confirm Data' },
 
             // Filters
-            'filterTitle': { lo: 'ກອງຂໍ້ມູນ (Filter)', en: 'Filter Data' },
-            'btnReset': { lo: 'ລ້າງຂໍ້ມູນກອງ', en: 'Reset Filters' },
+            'filterTitle': { lo: 'ຄົ້ນຫາຂໍ້ມູນ (Filter)', en: 'Filter Data' },
+            'btnReset': { lo: 'ລົບລ້າງຂໍ້ມູນ', en: 'Reset Filters' },
             'labelStartDate': { lo: 'ວັນທີເລີ່ມຕົ້ນ', en: 'Start Date' },
             'labelEndDate': { lo: 'ວັນທີສິ້ນສຸດ', en: 'End Date' },
             'labelSearch': { lo: 'ຄົ້ນຫາ', en: 'Search' },
@@ -1168,7 +1181,7 @@
             'statConnected': { lo: 'ເຊື່ອມຕໍ່ແລ້ວ', en: 'Connected' },
 
             // Charts
-            'chartTrend': { lo: 'ທ່າອ່ຽງການໃຊ້ຈ່າຍ (ປະຈຳວັນ)', en: 'Spending Trend (Daily)' },
+            'chartTrend': { lo: 'ທ່າອ່ຽງການໂອນເງິນ (ປະຈຳວັນ)', en: 'Spending Trend (Daily)' },
             'chartPie': { lo: 'ສັດສ່ວນຕາມໝວດໝູ່', en: 'Category Distribution' },
             'chartHistory': { lo: 'ປະຫວັດລາຍການລ່າສຸດ', en: 'Recent Transactions' },
             'msgNoData': { lo: 'ບໍ່ພົບລາຍການ', en: 'No transactions found' }
@@ -1180,7 +1193,7 @@
 
             // Update Text Elements
             document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
+                const key = el.dataset.i18n;
                 if (translations[key]) {
                     el.textContent = translations[key][lang];
                 }
@@ -1321,7 +1334,7 @@
                 listEl.innerHTML = '<div class="text-center py-8 text-gray-400 flex flex-col items-center"><div class="loader border-gray-400 mb-2"></div>ກຳລັງໂຫຼດຂໍ້ມູນ...</div>';
 
                 // Add timestamp to prevent caching
-                const nocache = new Date().getTime();
+                const nocache = Date.now();
                 const response = await fetch(`${GOOGLE_SCRIPT_URL}?nocache=${nocache}`);
                 if (!response.ok) throw new Error("Network response was not ok");
 
@@ -1339,7 +1352,7 @@
                     allTransactions = data.map(item => ({
                         ...item,
                         // Ensure amount is number
-                        amount: parseFloat(item.amount) || 0
+                        amount: Number.parseFloat(item.amount) || 0
                     })).reverse(); // Show newest first
 
                     applyFilters(); // Re-render everything
